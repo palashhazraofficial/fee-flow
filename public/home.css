@@ -82,11 +82,11 @@ a {
 @media (max-width: 400px) {
 
     .app-name {
-        font-size: 25px;
+        font-size: 30px;
     }
 
     .app-tag {
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .login-btn {
@@ -94,7 +94,12 @@ a {
     }
 
     .footer {
-        font-size: 9px;
+        display: none !important;
+    }
+
+    .main-container {
+        height: 80%;
+        width: 90%;
     }
 
 }
