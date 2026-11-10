@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/resources/favicon-512.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="/verifyOTP.css">
+    <title>FeeFlow | Verify OTP</title>
+</head>
+<body>
+    <div class="page-container">
+
+        <div class="header">FeeFlow</div>
+
+        <div class="main-container">
+
+            <div class="back-to-home"><a href="/" style="color: #DE350B;"><i class="fa-solid fa-arrow-left-long"></i></a></div>
+
+            <form action="/login/verify-otp/verify" method="POST" class="otp-container">
+
+                <div class="form-head">Verify Email Id via OTP</div>
+
+                <div class="form-tag">We send a OTP to your email id (In case please check spam inbox)</div>
+
+                <div class="inputbox-container">
+                    <input type="number" class="inputbox" name="OTP" placeholder="Enter OTP here" required>
+                </div>
+
+                <div>
+                    <input type="email" id="hiddenEmail" name="userEmail" value="<%= userEmail %>" hidden>
+                </div>
+
+                <div class="otp-btn-container">
+                    <input type="submit" value="Verify" class="otp-btn">
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+</body> 
+</html>

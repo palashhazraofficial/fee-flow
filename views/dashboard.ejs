@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/resources/favicon-512.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.26.25/sweetalert2.css" integrity="sha512-qP4rMpT6bFIS2bI6udQj2QQSlrtzqscQJJJQnuQrxbCp6goQRTN3Y4l5Y3gVzKNvlJyQFYd/qJCp6X9obaaB6Q==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="dashboard.css">
+    <title>FeeFlow | Dashboard</title>
+</head>
+<body>
+    Dashboard
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.26.25/sweetalert2.min.js"></script>
+    <script>
+
+        const successMsg = "<%= success_msg %>";
+        if (successMsg && successMsg.length > 0) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Verified!',
+                text: successMsg,
+                timer: 3000,
+                showConfirmButton: false
+            })
+        }
+
+        const errorMsg = "<%= error_msg %>";
+        if (errorMsg && errorMsg.length > 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: errorMsg,
+                confirmButtonColor: "#ff0000"
+            })
+        }
+
+    </script>
+
+</body>
+</html>
