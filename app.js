@@ -35,7 +35,7 @@ app.use(session({
     cookie: {
         maxAge: SESSION_EXPIRY_TIME,
         httpOnly: true,
-        secure: false,  // change to true while publish
+        secure: true,  // change to true while publish
         sameSite: 'lax'
     }
 }));
