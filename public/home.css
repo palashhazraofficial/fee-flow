@@ -13,7 +13,7 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #0d92d944;
+    background-color: #de350b69;
 }
 
 .main-container {
@@ -39,7 +39,7 @@ a {
 .app-name {
     font-size: 60px;
     font-weight: 500;
-    color: #0D91D9;
+    color: #DE350B;
 }
 
 .app-tag {
@@ -54,7 +54,7 @@ a {
     border: none;
     border-radius: 9px;
     border: 2px solid white;
-    background-color: #0D91D9;
+    background-color: #DE350B;
     color: white;
     cursor: pointer;
     transition: transform 0.2s ease-in-out;

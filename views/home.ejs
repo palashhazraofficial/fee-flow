@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#000000">
+    <link rel="apple-touch-icon" href="/resources/favicon-192.png">
+    <link rel="icon" href="/resources/favicon-512.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="home.css">
     <title>FeeFlow</title>
@@ -14,7 +18,7 @@
             <div class="app-name">FeeFlow</div>
             <div class="app-tag">Fee Management System For Tution Centers</div>
             <div class="login-btn-container">
-                <a href="/login"><button class="login-btn">Log in <i class="fa-solid fa-arrow-right-to-bracket" style="color: white; background-color: rgba(255, 255, 255, 0.021);"></i></button></a>
+                <a href="/login"><button class="login-btn">Log In <i class="fa-solid fa-arrow-right-to-bracket" style="color: white; background-color: rgba(255, 255, 255, 0.021);"></i></button></a>
             </div>
         </div>
 
@@ -43,5 +47,15 @@
         </div>
     
     </div>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then(reg => console.log('Service Worker registered successfully!', reg))
+                .catch(err => console.log('Service Worker registration failed:', err));
+            });
+        }
+    </script>
 </body>
 </html>
