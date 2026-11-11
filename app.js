@@ -36,7 +36,7 @@ app.use(session({
     cookie: {
         maxAge: SESSION_EXPIRY_TIME,
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: process.env.NODE_ENV === 'production',  // change to true while publish
         sameSite: 'lax'
     }
 }));
