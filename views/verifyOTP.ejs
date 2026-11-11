@@ -40,5 +40,38 @@
         </div>
 
     </div>
+
+    <script>
+
+        const loginForm = document.querySelector('.otp-container');
+        const submitBtn = document.querySelector('.otp-btn');
+        let isSubmitting = false;
+
+        loginForm.addEventListener('submit', function(event) {
+            
+            if (isSubmitting) {
+                event.preventDefault();
+                return;
+            }
+            isSubmitting = true;
+            submitBtn.disabled = true;
+            submitBtn.value = 'Verifying...';
+            submitBtn.style.opacity = '0.7';
+            submitBtn.style.cursor = 'not-allowed';
+
+        });
+
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) {
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                submitBtn.value = 'Verify';
+                submitBtn.style.opacity = '1';
+                submitBtn.style.cursor = 'pointer';
+                Swal.close();
+            }
+        });
+
+    </script>
 </body> 
 </html>
