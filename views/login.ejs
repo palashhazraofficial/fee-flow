@@ -43,13 +43,46 @@
 
         const errorMsg = "<%= error_msg %>"
         if (errorMsg && errorMsg.length > 0) {
+
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: errorMsg,
                 confirmButtonColor: "#ff0000"
             })
+            
         }
+
+        const loginForm = document.querySelector('.login-container');
+        const submitBtn = document.querySelector('.otp-btn');
+        let isSubmitting = false;
+
+        loginForm.addEventListener('submit', function(event) {
+
+            if (isSubmitting) {
+                event.preventDefault();
+                return;
+            }
+            isSubmitting = true;
+            submitBtn.disabled = true;
+            submitBtn.value = 'Sending OTP...';
+            submitBtn.style.opacity = '0.7';
+            submitBtn.style.cursor = 'not-allowed';
+
+        })
+
+        window.addEventListener('pageshow', function(event) {
+
+            if (event.persisted) {
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                submitBtn.value = 'Get OTP';
+                submitBtn.style.opacity = '1';
+                submitBtn.style.cursor = 'pointer';
+                Swal.close();
+            }
+
+        });
 
     </script>
 

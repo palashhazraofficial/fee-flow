@@ -14,6 +14,7 @@ const check_OTP = require('./modules/check_OTP.js');
 
 const app = express();
 
+app.set('trust proxy', 1);
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
@@ -35,7 +36,7 @@ app.use(session({
     cookie: {
         maxAge: SESSION_EXPIRY_TIME,
         httpOnly: true,
-        secure: true,  // change to true while publish
+        secure: process.env.NODE_ENV === 'production',  // change to true while publish
         sameSite: 'lax'
     }
 }));
@@ -68,16 +69,31 @@ app.post('/login/verify-otp/verify', async (req, res) => {
                 req.session._id = matchedProfile._id.toString();
                 req.session.isLoggedIn = true;
                 req.flash('success_msg', "Welcome Back! Good to see you");
-                return res.redirect('/dashboard');
+                req.session.save((err) => {
+                    if (err) {
+                        console.log("Error occurred while saving session: ", err);
+                    }
+                    return res.redirect('/dashboard');
+                })
             } else {
                 req.flash('error_msg', "OTP is not valid! Please retry");
-                return res.redirect('/login');
+                req.session.save((err) => {
+                    if (err) {
+                        console.log("Error occurred while saving session: ", err);
+                    }
+                    return res.redirect('/login');
+                })
             }
 
         } catch (err) {
             console.log("Error while verifing OTP: ", err);
             req.flash('error_msg', "Internal server error! Please try again");
-            return res.redirect('/login');
+            req.session.save((err) => {
+                if (err) {
+                    console.log("Error occurred while saving session: ", err);
+                }
+                return res.redirect('/login');
+            })
         }
 
     } else {
@@ -101,12 +117,23 @@ app.post('/login/verify-otp', async (req, res) => {
             } catch (err) {
                 console.log("Error while generating OTP: ", err);
                 req.flash('error_msg', "Internal server problem! Please try again");
-                return res.redirect('/');
+                req.session.save((err) => {
+                    if (err) {
+                        console.log("Error occurred while saving session: ", err);
+                    }
+                    return res.redirect('/');
+                })
+            
             }
         
         } else {
-            req.flash('error_msg', "Invalid email id! Please recheck")
-            return res.redirect('/login');
+            req.flash('error_msg', "Invalid email id! Please recheck");
+            req.session.save((err) => {
+                if (err) {
+                    console.log("Error occurred while saving session: ", err);
+                }
+                return res.redirect('/login');
+            })
         }
 
     } else {
