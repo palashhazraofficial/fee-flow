@@ -17,12 +17,31 @@ async function send_OTP_via_email(userEmail, OTP) {
       subject: 'Your Login Verification Code',
 
       htmlContent: `
-        <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 8px;">
-          <h2>Login Verification</h2>
-          <p>Use the following OTP to log in to your account:</p>
-          <h1 style="letter-spacing: 5px; color: #0066cc;">${OTP}</h1>
-          <p>This code is valid for 5 minutes. Please do not share it with anyone.</p>
-        </div>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+            <title></title>
+        </head>
+        <body>
+            <div style="font-family: Arial, sans-serif; padding: 18px; border: 1px solid #eee; border-radius: 9px;">
+
+                <h1 style="letter-spacing: 5px; color: #DE350B;">FeeFlow</h1>
+                <h2>Login Verification</h2>
+                <p>Use the following OTP to log in to your account:</p>
+                <h1 style="letter-spacing: 5px; color: #DE350B;">${OTP}</h1>
+                <p>This code is valid for 6 minutes. Please do not share it with anyone.</p>
+
+                <div style="display: flex; flex-direction: row; justify-content: space-evenly; padding: 18px; border-top: 1px solid #eee;">
+                    <h4>Developer: </h4>
+                    <a href="https://www.linkedin.com/in/palashhazraofficial/" style="text-decoration: none; color: #eee;"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://x.com/realpalashhazra"><i class="fa-brands fa-square-x-twitter"></i></a>
+                </div>
+            </div>
+        </body>
+        </html>
       `,
 
       sender: {
