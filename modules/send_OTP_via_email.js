@@ -1,58 +1,49 @@
-const nodemailer = require('nodemailer');
+const { BrevoClient } = require('@getbrevo/brevo');
 require('dotenv').config();
 
-const EMAIL_ID = process.env.EMAIL_ID;
-const EMAIL_APP_PASSWORD = process.env.EMAIL_APP_PASSWORD;
+const GMAIL_API_BERVO = process.env.GMAIL_API_BERVO;
+const FEEFLOW_GMAIL_ID = process.env.FEEFLOW_GMAIL_ID;
+
+const brevo = new BrevoClient({
+  apiKey: GMAIL_API_BERVO,
+});
 
 async function send_OTP_via_email(userEmail, OTP) {
-    
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: EMAIL_ID,
-            pass: EMAIL_APP_PASSWORD
-        }
+
+  try {
+
+    const response = await brevo.transactionalEmails.sendTransacEmail({
+
+      subject: 'Your Login Verification Code',
+
+      htmlContent: `
+        <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 8px;">
+          <h2>Login Verification</h2>
+          <p>Use the following OTP to log in to your account:</p>
+          <h1 style="letter-spacing: 5px; color: #0066cc;">${OTP}</h1>
+          <p>This code is valid for 5 minutes. Please do not share it with anyone.</p>
+        </div>
+      `,
+
+      sender: {
+        name: 'Team FeeFlow',
+        email: FEEFLOW_GMAIL_ID,
+      },
+
+      to: [{ email: userEmail }],
+
     });
 
-    const text_msg = `${OTP} is your OTP to login into FeeFlow dashboard. It's only stays for 6 minutes. Don't share it with anyone.`
-    const htmlContent = 
-    `<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Verify Email</title>
-    </head>
-    <body>
+    return { success: true, messageId: response.messageId };
 
-        <table style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
+  } catch (error) {
 
-            <tr>
-                <th style="font-size: 20px; height: fit-content; width: 100%; border-bottom: 2px solid rgba(0, 0, 0, 0.603); background-color: black; color:#DE350B; padding: 10px; font-weight: bold;">FeeFlow</th>
-            </tr>
-            <tr>
-                <td style="font-size: 15px; height: fit-content; width: 100%; background-color: black; color: white; padding: 10px;">${text_msg}</td>
-            </tr>
+    console.error('Error sending OTP via Brevo:', error);
+    return { success: false, error: error.message };
 
-        </table>
-
-    </body>
-    </html>`
-
-    const mailOptions = {
-        from: EMAIL_ID,
-        to: userEmail,
-        subject: 'FeeFlow Login OTP',
-        html: htmlContent
-    };
-
-    try {
-        const sendOTP = await transporter.sendMail(mailOptions);
-        return sendOTP;
-    } catch(err) {
-        throw err;
-    }
+  }
 
 }
 
 module.exports = send_OTP_via_email;
+
