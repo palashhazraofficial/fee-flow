@@ -19,8 +19,8 @@ a {
     height: fit-content;
     width: 100%;
     font-size: 25px;
-    padding: 10px;
     font-weight: bolder;
+    padding: 10px;
     display: flex;
     align-items: center;
     color: #DE350B;
@@ -123,8 +123,16 @@ a {
         width: 90%;
     }
 
+    .header {
+        font-weight: 300;
+    }
+
     .form-head {
-        font-size: 18px;
+        font-size: 25px;
+    }
+
+    .form-tag, .otp-container {
+        font-size: 14px;
     }
 
     .inputbox-container {
