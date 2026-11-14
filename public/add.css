@@ -51,7 +51,7 @@ a {
     left: 0;
 }
 
-.dashboard-ph-scr, .add-batch-ph-scr, .add-student-ph-scr, .more-ph-scr {
+.dashboard-ph-scr, .add-ph-scr, .manage-ph-scr, .more-ph-scr {
     height: fit-content;
     padding: 10px;
     color: black;
@@ -64,13 +64,13 @@ a {
     font-weight: bold;
 }
 
-.add-batch-ph-scr {
+.add-ph-scr {
     background-color: #DE350B;
     color: white;
     font-weight: bold;
 }
 
-.add-student-ph-scr:hover {
+.manage-ph-scr:hover {
     background-color: #de350b69;
     color: white;
     font-weight: bold;
@@ -95,7 +95,7 @@ a {
     overflow-y: auto; 
 }
 
-.dashboard-com-scr, .add-batch-com-scr, .add-student-com-scr, .more-com-scr {
+.dashboard-com-scr, .add-com-scr, .manage-com-scr, .more-com-scr {
     height: fit-content;
     width: 90%;
     padding: 10px;
@@ -112,13 +112,13 @@ a {
     font-weight: bold;
 }
 
-.add-batch-com-scr{
+.add-com-scr{
     background-color: #DE350B;
     color: white;
     font-weight: bold;
 }
 
-.add-student-com-scr:hover{
+.manage-com-scr:hover{
     background-color: #de350b69;
     color: white;
     font-weight: bold;
@@ -142,7 +142,7 @@ a {
         font-weight: 300;
     }
 
-    .computer-side-bar, .dashboard-com-scr, .add-batch-com-scr, .add-student-com-scr, .more-com-scr {
+    .computer-side-bar, .dashboard-com-scr, .add-com-scr, .manage-com-scr, .more-com-scr {
         display: none !important;
         height: 0;
         width: 0;
@@ -150,7 +150,7 @@ a {
 }
 
 @media (min-width: 400px) {
-    .container-2, .dashboard-ph-scr, .add-batch-ph-scr, .add-student-ph-scr, .more-ph-scr {
+    .container-2, .dashboard-ph-scr, .add-ph-scr, .manage-ph-scr, .more-ph-scr {
         display: none !important;
         height: 0;
         width: 0;

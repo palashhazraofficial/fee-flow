@@ -152,20 +152,20 @@ app.get('/dashboard', (req, res) => {
     
 })
 
-app.get('/add-batch', (req, res) => {
+app.get('/add', (req, res) => {
 
     if (req.session.isLoggedIn) {
-        return res.render('add-batch');
+        return res.render('add');
     } else {
         return res.redirect('/');
     }
     
 })
 
-app.get('/add-student', (req, res) => {
+app.get('/manage', (req, res) => {
 
     if (req.session.isLoggedIn) {
-        return res.render('add-student');
+        return res.render('manage');
     } else {
         return res.redirect('/');
     }
