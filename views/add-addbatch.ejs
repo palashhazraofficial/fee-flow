@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/resources/favicon-512.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.26.25/sweetalert2.css" integrity="sha512-qP4rMpT6bFIS2bI6udQj2QQSlrtzqscQJJJQnuQrxbCp6goQRTN3Y4l5Y3gVzKNvlJyQFYd/qJCp6X9obaaB6Q==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="/add-addbatch.css">
+    <title>FeeFlow | Add Batch</title>
+</head>
+<body>
+    
+    <div class="page-container">
+
+        <div class="header">FeeFlow</div>
+
+        <div class="container-1">
+
+            <div class="computer-side-bar">
+                <a href="/dashboard"><div class="dashboard-com-scr"><i class="fa-solid fa-chart-line" class="icons"></i> Dashboard</div></a>
+                <a href="/add/add-batch"><div class="add-com-scr"><i class="fa-solid fa-plus" class="icons"></i> Add Batch/Student</div></a>
+                <a href="/manage"><div class="manage-com-scr"><i class="fa-solid fa-list-check" class="icons"></i> Manage</div></a>
+                <a href="/more"><div class="more-com-scr"><i class="fa-solid fa-ellipsis" class="icons"></i> More</div></a>
+            </div>
+
+            <div class="screen-display">
+
+                <div class="add-batch-student-toggle-container">
+                    <a href="/add/add-batch"><div class="add-batch-btn">Add Batch</div></a>
+                    <a href="/add/add-student"><div class="add-student-btn">Add Student</div></a>
+                </div>
+
+                <div class="add-batch-form-container">
+
+                    <form action="/add/add-batch" method="POST" class="add-batch-form">
+
+                        <div class="inputbox-container">
+                            <input type="text" class="inputbox" name="batchName" placeholder="Write Batch Name Here (ex. Class 11)" required>
+                        </div>
+
+                        <input type="hidden" name="user_id" value="<%= user_id %>" readonly>
+
+                        <div class="add-batch-container">
+                            <input type="submit" value="Add Batch" class="submit-batch-btn">
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="container-2">
+            <a href="/dashboard"><div class="dashboard-ph-scr"><i class="fa-solid fa-chart-line" class="icons"></i></div></a>
+            <a href="/add/add-batch"><div class="add-ph-scr"><i class="fa-solid fa-plus" class="icons"></i></i></div></a>
+            <a href="/manage"><div class="manage-ph-scr"><i class="fa-solid fa-list-check" class="icons"></i></div></a>
+            <a href="/more"><div class="more-ph-scr"><i class="fa-solid fa-ellipsis" class="icons"></i></div></a>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.26.25/sweetalert2.min.js"></script>
+    <script>
+
+        const successMsg = "<%= success_msg %>";
+        if (successMsg && successMsg.length > 0) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: successMsg,
+                timer: 2000,
+                showConfirmButton: false
+            })
+        }
+
+        const errorMsg = "<%= error_msg %>"
+        if (errorMsg && errorMsg.length > 0) {
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: errorMsg,
+                confirmButtonColor: "#ff0000"
+            })
+            
+        }
+
+        const loginForm = document.querySelector('.add-batch-form');
+        const submitBtn = document.querySelector('.submit-batch-btn');
+        let isSubmitting = false;
+
+        loginForm.addEventListener('submit', function(event) {
+
+            if (isSubmitting) {
+                event.preventDefault();
+                return;
+            }
+            isSubmitting = true;
+            submitBtn.disabled = true;
+            submitBtn.value = 'Adding...';
+            submitBtn.style.opacity = '0.7';
+            submitBtn.style.cursor = 'not-allowed';
+
+        })
+
+        window.addEventListener('pageshow', function(event) {
+
+            if (event.persisted) {
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                submitBtn.value = 'Add Batch';
+                submitBtn.style.opacity = '1';
+                submitBtn.style.cursor = 'pointer';
+                Swal.close();
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>

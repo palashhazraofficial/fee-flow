@@ -11,6 +11,8 @@ const check_user_by_email = require('./modules/check_user_by_email.js');
 const find_user_by_email = require('./modules/find_user_by_email.js');
 const generate_OTP = require('./modules/generate_OTP.js');
 const check_OTP = require('./modules/check_OTP.js');
+const add_batchName_to_db = require('./modules/add_batchName_to_db.js');
+const fetch_batchName_from_db = require('./modules/fetch_batchName_from_db.js');
 
 const app = express();
 
@@ -142,6 +144,43 @@ app.post('/login/verify-otp', async (req, res) => {
 
 })
 
+app.post('/add/add-batch', async (req, res) => {
+
+    if (req.session.isLoggedIn) {
+
+        const user_id = req.body.user_id;
+        const batchName = req.body.batchName;
+
+        try {
+
+            await add_batchName_to_db(batchName, user_id);
+            req.flash('success_msg', "Batch added successfully");
+            req.session.save((err) => {
+                if (err) {
+                    console.log("Error occurred while saving session: ", err);
+                }
+                return res.redirect('/add/add-batch');
+            })
+
+        } catch(err) {
+
+            console.log("Error while adding batchName to database: ", err);
+            req.flash('error_msg', "Internal error! Batch not added");
+            req.session.save((err) => {
+                if (err) {
+                    console.log("Error occurred while saving session: ", err);
+                }
+                return res.redirect('/add/add-batch');
+            })
+
+        }
+        
+    } else {
+        return res.redirect('/');
+    }
+
+})
+
 app.get('/dashboard', (req, res) => {
 
     if (req.session.isLoggedIn) {
@@ -152,10 +191,40 @@ app.get('/dashboard', (req, res) => {
     
 })
 
-app.get('/add', (req, res) => {
+app.get('/add/add-batch', (req, res) => {
 
     if (req.session.isLoggedIn) {
-        return res.render('add');
+        const user_id = req.session._id;
+        return res.render('add-addbatch', {user_id});
+    } else {
+        return res.redirect('/');
+    }
+    
+})
+
+app.get('/add/add-student', async (req, res) => {
+
+    if (req.session.isLoggedIn) {
+
+        const user_id = req.session._id;
+        try {
+
+            const fetchedData = await fetch_batchName_from_db(user_id);
+            return res.render('add-addstudent', {user_id, fetchedData});
+
+        } catch(err) {
+
+            console.log("Error while fetching data from batchName schema: ", err);
+            req.flash('error_msg', "Internal error! No batch found");
+            req.session.save((err) => {
+                if (err) {
+                    console.log("Error occurred while saving session: ", err);
+                }
+                return res.redirect('/add/add-batch');
+            })
+
+        }
+
     } else {
         return res.redirect('/');
     }

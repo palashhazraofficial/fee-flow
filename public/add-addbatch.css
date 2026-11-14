@@ -92,7 +92,62 @@ a {
 .screen-display {
     height: 100%;
     width: 80%;
-    overflow-y: auto; 
+    overflow-y: auto;
+    border: 2px solid #de350b69;
+    border-radius: 9px; 
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.add-batch-student-toggle-container {
+    height: fit-content;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    justify-content: space-evenly;
+}
+
+.add-batch-btn {
+    height: fit-content;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 9px;
+    font-weight: bold;
+    color: white;
+    background-color: #DE350B;
+}
+
+.add-student-btn {
+    height: fit-content;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 9px;
+    color: black;
+}
+
+.add-student-btn:hover{
+    color: white;
+    font-weight: bold;
+    background-color: #de350b69;
+}
+
+.add-batch-form-container {
+    height: fit-content;
+    width: 90%;
+}
+
+.add-batch-form {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .dashboard-com-scr, .add-com-scr, .manage-com-scr, .more-com-scr {
@@ -136,16 +191,75 @@ a {
     color: black;
 }
 
+.inputbox-container {
+    height: 50px;
+    width: 60%;
+    border-radius: 9px;
+    margin: 10px;
+}
+
+.inputbox {
+    height: 100%;
+    width: 100%;
+    border: 2px solid #DE350B;
+    font-size: 18px;
+    border-radius: 9px;
+}
+
+.add-batch-container {
+    height: 40px;
+    width: 50%;
+    border: none;
+    margin: 10px;
+} 
+
+.submit-batch-btn {
+    height: 100%;
+    width: 100%;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    background-color: #DE350B;
+    color: white;
+    transition: transform 0.2s ease-in-out;
+}
+
+.submit-batch-btn:hover {
+    transform: scale(1.05);
+}
+
 @media (max-width: 400px) {
 
     .header {
         font-weight: 300;
     }
 
+    .screen-display {
+        width: 100%;
+    }
+
+    .add-batch-student-toggle-container {
+        font-size: 14px;
+    }
+
     .computer-side-bar, .dashboard-com-scr, .add-com-scr, .manage-com-scr, .more-com-scr {
         display: none !important;
         height: 0;
         width: 0;
+    }
+
+    .inputbox-container {
+        width: 80%;
+    }
+
+    .inputbox {
+        font-size: 14px;
+    }
+
+    .submit-batch-btn {
+        font-size: 14px;
     }
 }
 
