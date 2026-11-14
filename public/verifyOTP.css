@@ -131,6 +131,10 @@ a {
         font-size: 25px;
     }
 
+    .otp-btn {
+        font-size: 14px;
+    }
+
     .form-tag, .otp-container {
         font-size: 14px;
     }

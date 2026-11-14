@@ -152,6 +152,36 @@ app.get('/dashboard', (req, res) => {
     
 })
 
+app.get('/add-batch', (req, res) => {
+
+    if (req.session.isLoggedIn) {
+        return res.render('add-batch');
+    } else {
+        return res.redirect('/');
+    }
+    
+})
+
+app.get('/add-student', (req, res) => {
+
+    if (req.session.isLoggedIn) {
+        return res.render('add-student');
+    } else {
+        return res.redirect('/');
+    }
+    
+})
+
+app.get('/more', (req, res) => {
+
+    if (req.session.isLoggedIn) {
+        return res.render('more');
+    } else {
+        return res.redirect('/');
+    }
+    
+})
+
 app.get('/login', (req, res) => {
     if (!req.session.isLoggedIn) {
         return res.render('login');

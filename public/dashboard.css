@@ -92,6 +92,7 @@ a {
 .screen-display {
     height: 100%;
     width: 80%;
+    overflow-y: auto; 
 }
 
 .dashboard-com-scr, .add-batch-com-scr, .add-student-com-scr, .more-com-scr {
