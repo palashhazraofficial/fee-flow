@@ -49,4 +49,3 @@ async function send_OTP_via_email(userEmail, OTP) {
 }
 
 module.exports = send_OTP_via_email;
-
