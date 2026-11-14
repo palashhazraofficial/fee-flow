@@ -117,8 +117,16 @@ a {
         width: 90%;
     }
 
+    .header {
+        font-weight: 300;
+    }
+
     .form-head {
-        font-size: 18px;
+        font-size: 25px;
+    }
+
+    .form-tag, .login-container {
+        font-size: 14px;
     }
 
     .inputbox-container {
