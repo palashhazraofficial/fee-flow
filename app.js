@@ -13,6 +13,7 @@ const generate_OTP = require('./modules/generate_OTP.js');
 const check_OTP = require('./modules/check_OTP.js');
 const add_batchName_to_db = require('./modules/add_batchName_to_db.js');
 const fetch_batchName_from_db = require('./modules/fetch_batchName_from_db.js');
+const add_student_name_to_db = require('./modules/add_student_name_to_db.js');
 
 const app = express();
 
@@ -181,6 +182,45 @@ app.post('/add/add-batch', async (req, res) => {
 
 })
 
+app.post('/add/add-student/:user_id/:batchName', async (req, res) => {
+
+    if (req.session.isLoggedIn) {
+
+        const studentName = req.body.studentName;
+        const studentPhNo = req.body.studentPhNo;
+        const studentPhNoType = req.body.studentPhNoType;
+        const batchName = req.body.batchName;
+        const user_id = req.body.user_id;
+
+        try {
+
+            await add_student_name_to_db(studentName, studentPhNo, studentPhNoType, batchName, user_id);
+            req.flash('success_msg', "Student saved!");
+            req.session.save((err) => {
+                if (err) {
+                    console.log("Error occurred while saving session: ", err);
+                }
+                return res.redirect(`/add/add-student/${user_id}/${batchName}`);
+            })
+
+        } catch(err) {
+
+            console.log("Error while saving student data to db: ", err);
+            req.flash('error_msg', "Internal error occured! Student data does not save");
+            req.session.save((err) => {
+                if (err) {
+                    console.log("Error occurred while saving session: ", err);
+                }
+                return res.redirect(`/add/add-student/${user_id}/${batchName}`);
+            })
+
+        }
+
+    } else {
+        return res.redirect('/');
+    }
+})
+
 app.get('/dashboard', (req, res) => {
 
     if (req.session.isLoggedIn) {
@@ -225,6 +265,18 @@ app.get('/add/add-student', async (req, res) => {
 
         }
 
+    } else {
+        return res.redirect('/');
+    }
+    
+})
+
+app.get('/add/add-student/:user_id/:batchName', (req, res) => {
+
+    if (req.session.isLoggedIn) {
+        const user_id = req.params.user_id;
+        const batchName = req.params.batchName;
+        return res.render('add-addstudent-add', {user_id, batchName});
     } else {
         return res.redirect('/');
     }
