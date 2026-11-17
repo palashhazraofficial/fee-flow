@@ -41,6 +41,7 @@ a {
     height: 10%;
     width: 100%;
     border-top: 1px solid #de350b69;
+    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -209,6 +210,15 @@ a {
     font-weight: bold;
 }
 
+.no-item-tag {
+    height: fit-content;
+    width: fit-content;
+    padding: 10px;
+    margin: 10px;
+    font-size: 25px;
+    color: #de350b69;
+}
+
 @media (max-width: 400px) {
 
     .header {
@@ -229,7 +239,7 @@ a {
         width: 0;
     }
 
-    .batch-list-element, .batch-list-tag {
+    .batch-list-element, .batch-list-tag, .no-item-tag {
         font-size: 14px;
     }
 }

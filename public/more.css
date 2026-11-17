@@ -41,6 +41,7 @@ a {
     height: 10%;
     width: 100%;
     border-top: 1px solid #de350b69;
+    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;

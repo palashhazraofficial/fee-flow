@@ -14,6 +14,9 @@ const check_OTP = require('./modules/check_OTP.js');
 const add_batchName_to_db = require('./modules/add_batchName_to_db.js');
 const fetch_batchName_from_db = require('./modules/fetch_batchName_from_db.js');
 const add_student_name_to_db = require('./modules/add_student_name_to_db.js');
+const fetch_student_list_from_db = require('./modules/fetch_student_list_from_db.js');
+const fetch_data_from_paymentHistory = require('./modules/fetch_data_from_paymentHistory.js');
+require('./modules/nodeCron.js');
 
 const app = express();
 
@@ -188,13 +191,13 @@ app.post('/add/add-student/:user_id/:batchName', async (req, res) => {
 
         const studentName = req.body.studentName;
         const studentPhNo = req.body.studentPhNo;
-        const studentPhNoType = req.body.studentPhNoType;
+        const WhatsAppNotifications = req.body.WhatsAppNotifications;
         const batchName = req.body.batchName;
         const user_id = req.body.user_id;
 
         try {
 
-            await add_student_name_to_db(studentName, studentPhNo, studentPhNoType, batchName, user_id);
+            await add_student_name_to_db(studentName, studentPhNo, WhatsAppNotifications, batchName, user_id);
             req.flash('success_msg', "Student saved!");
             req.session.save((err) => {
                 if (err) {
@@ -283,10 +286,78 @@ app.get('/add/add-student/:user_id/:batchName', (req, res) => {
     
 })
 
-app.get('/manage', (req, res) => {
+app.get('/manage/:user_id/:batchName', async (req, res) => {
 
     if (req.session.isLoggedIn) {
-        return res.render('manage');
+        const user_id = req.params.user_id;
+        const batchName = req.params.batchName;
+
+        try {
+            const studentData = await fetch_student_list_from_db(batchName, user_id);
+            return res.render('manage-studentList', {studentData});
+        } catch(err) {
+            console.log("Error while fetching data from db: ", err);
+            req.flash('error_msg', "Internal error occured! Student data not found");
+            req.session.save((err) => {
+                if (err) {
+                    console.log("Error occurred while saving session: ", err);
+                }
+                return res.redirect('/manage');
+            })
+        }
+
+    } else {
+        return res.redirect('/');
+    }
+
+})
+
+app.get('/manage/:user_id/:batchName/:student_id/:studentName', async (req, res) => {
+
+    if (req.session.isLoggedIn) {
+
+        const user_id = req.params.user_id;
+        const batchName = req.params.batchName;
+        const student_id = req.params.student_id;
+        const studentName = req.params.studentName;
+
+        try {
+            const studentDuePayments = await fetch_data_from_paymentHistory(student_id, user_id);
+            return res.render('each-student-dashboard', {user_id, batchName, student_id ,studentName, studentDuePayments});
+        } catch (err) {
+            console.log("Error while fetching data from paymentHistory: ", err);
+            req.flash('error_msg', "Internal error occured! Student data not found");
+            req.session.save((err) => {
+                if (err) {
+                    console.log("Error occurred while saving session: ", err);
+                }
+                return res.redirect(`/manage/${user_id}/${batchName}`);
+            })
+        }
+
+    } else {
+        return res.redirect('/');
+    }
+
+})
+
+app.get('/manage', async (req, res) => {
+
+    if (req.session.isLoggedIn) {
+        try {
+            const user_id = req.session._id;
+            const fetchedData = await fetch_batchName_from_db(user_id);
+            return res.render('manage', {fetchedData});
+        } catch (err) {
+            console.log("Error while fetching data from db: ", err);
+            req.flash('error_msg', "Internal error occured! Batch data not found");
+            req.session.save((err) => {
+                if (err) {
+                    console.log("Error occurred while saving session: ", err);
+                }
+                return res.redirect('/dashboard');
+            })
+        }
     } else {
         return res.redirect('/');
     }

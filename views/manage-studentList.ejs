@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/resources/favicon-512.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.26.25/sweetalert2.css" integrity="sha512-qP4rMpT6bFIS2bI6udQj2QQSlrtzqscQJJJQnuQrxbCp6goQRTN3Y4l5Y3gVzKNvlJyQFYd/qJCp6X9obaaB6Q==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="/manage-studentList.css">
+    <title>FeeFlow | Student Details</title>
+</head>
+<body>
+    
+    <div class="page-container">
+
+        <div class="header">FeeFlow</div>
+
+        <div class="container-1">
+
+            <div class="computer-side-bar">
+                <a href="/dashboard"><div class="dashboard-com-scr"><i class="fa-solid fa-chart-line" class="icons"></i> Dashboard</div></a>
+                <a href="/add/add-batch"><div class="add-com-scr"><i class="fa-solid fa-plus" class="icons"></i> Add Batch/Student</div></a>
+                <a href="/manage"><div class="manage-com-scr"><i class="fa-solid fa-list-check" class="icons"></i> Manage</div></a>
+                <a href="/more"><div class="more-com-scr"><i class="fa-solid fa-ellipsis" class="icons"></i> More</div></a>
+            </div>
+
+            <div class="screen-display">
+                <div class="left-arrow"><a href="/manage" style="color: #DE350B;"><i class="fa-solid fa-arrow-left-long"></i></a></div>
+
+                <% if (!studentData.length > 0) { %>
+
+                    <div class="no-item-tag"><i class="fa-solid fa-file-circle-xmark"></i> No items! First add students</div>
+
+                <% } else { %>
+
+                    <div class="delete-edit-btn-container">
+                        <div class="batch-name"><%= studentData[0].batchName %></div>
+                        <a href="#"><div class="edit-btn"><i class="fa-solid fa-pen"></i></div></a>
+                        <a href="#"><div class="delete-btn"><i class="fa-solid fa-trash"></i></div></a>
+                    </div>
+
+                    <% studentData.forEach(data => { %>
+                        <a href="/manage/<%= data.user_id %>/<%= data.batchName %>/<%= data._id.toString() %>/<%= data.studentName %>" style="color: black;">
+                            <div class="student-name-container">
+                                <div class="student-name"><%= data.studentName %></div>
+                                <div class="student-phno"><%= data.studentPhNo %></div>
+                            </div>
+                        </a>
+                    <% }) %>
+
+                <% } %>
+            </div>
+
+        </div>
+
+        <div class="container-2">
+            <a href="/dashboard"><div class="dashboard-ph-scr"><i class="fa-solid fa-chart-line" class="icons"></i></div></a>
+            <a href="/add/add-batch"><div class="add-ph-scr"><i class="fa-solid fa-plus" class="icons"></i></i></div></a>
+            <a href="/manage"><div class="manage-ph-scr"><i class="fa-solid fa-list-check" class="icons"></i></div></a>
+            <a href="/more"><div class="more-ph-scr"><i class="fa-solid fa-ellipsis" class="icons"></i></div></a>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.26.25/sweetalert2.min.js"></script>
+    <script>
+
+        const errorMsg = "<%= error_msg %>"
+        if (errorMsg && errorMsg.length > 0) {
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: errorMsg,
+                confirmButtonColor: "#ff0000"
+            })
+            
+        }
+
+    </script>
+
+</body>
+</html>

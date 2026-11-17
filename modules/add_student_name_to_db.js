@@ -1,13 +1,13 @@
 const studentList = require('../database/studentList_schema.js');
 
-async function add_student_name_to_db (studentName, studentPhNo, studentPhNoType, batchName, user_id) {
+async function add_student_name_to_db (studentName, studentPhNo, WhatsAppNotifications, batchName, user_id) {
 
     try {
 
         const newstudent = new studentList ({
             studentName,
             studentPhNo,
-            studentPhNoType,
+            WhatsAppNotifications,
             batchName,
             user_id
         });

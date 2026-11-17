@@ -41,6 +41,7 @@ a {
     height: 10%;
     width: 100%;
     border-top: 1px solid #de350b69;
+    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -93,6 +94,10 @@ a {
     height: 100%;
     width: 80%;
     overflow-y: auto; 
+    border: 2px solid #de350b69;
+    border-radius: 9px;
+    margin: 10px;
+    padding: 10px;
 }
 
 .dashboard-com-scr, .add-com-scr, .manage-com-scr, .more-com-scr {
@@ -136,6 +141,30 @@ a {
     color: black;
 }
 
+.batchName-list {
+    height: fit-content;
+    width: 90%;
+    padding: 10px;
+    border-bottom: 1px solid black;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.batchName-list:hover {
+    font-weight: bolder;
+    border-radius: 9px;
+    background-color: whitesmoke;
+}
+
+.no-item-tag {
+    height: fit-content;
+    width: fit-content;
+    padding: 10px;
+    margin: 10px;
+    font-size: 25px;
+    color: #de350b69;
+}
+
 @media (max-width: 400px) {
 
     .header {
@@ -146,6 +175,14 @@ a {
         display: none !important;
         height: 0;
         width: 0;
+    }
+
+    .batchName-list, .no-item-tag {
+        font-size: 14px;
+    }
+
+    .screen-display {
+        width: 100%;
     }
 }
 

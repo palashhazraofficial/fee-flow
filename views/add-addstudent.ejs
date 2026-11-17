@@ -32,10 +32,20 @@
                 </div>
 
                 <div class="batch-list-container">
-                    <div class="batch-list-tag">SELECT A BATCH FIRST</div>
-                    <% fetchedData.forEach(data => { %>
-                        <a href="/add/add-student/<%= user_id %>/<%= data.batchName %>"><div class="batch-list-element"><%= data.batchName %><i class="fa-solid fa-arrow-right" class="icons"></i></div></a>
-                    <% }); %>
+
+                    <% if (!fetchedData.length > 0) { %>
+
+                        <div class="no-item-tag"><i class="fa-solid fa-file-circle-xmark"></i> No items! First add a batch</div>
+
+                    <% } else { %>
+
+                        <div class="batch-list-tag">SELECT A BATCH FIRST</div>
+                        <% fetchedData.forEach(data => { %>
+                            <a href="/add/add-student/<%= user_id %>/<%= data.batchName %>"><div class="batch-list-element"><%= data.batchName %><i class="fa-solid fa-arrow-right" class="icons"></i></div></a>
+                        <% }); %>
+                        
+                    <% } %>
+
                 </div>
 
             </div>
