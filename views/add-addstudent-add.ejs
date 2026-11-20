@@ -41,13 +41,19 @@
                         </div>
 
                         <div class="inputbox-container">
-                            <input type="number" class="inputbox" name="studentPhNo" placeholder="Write Ph No (ex. 0123456789)" required>
+                            <input type="number" class="inputbox" name="studentPhNo" placeholder="Write Ph No (ex. 911234567890)" required>
                         </div>
 
                         <div class="radio-input">
                             Send notifications via WhatsApp: 
                             <input type="radio" value="true" name="WhatsAppNotifications" required> Yes
                             <input type="radio" value="false" name="WhatsAppNotifications" required> No
+                        </div>
+
+                        <div class="radio-input">
+                            Message language:  
+                            <input type="radio" value="Bengali" name="MessageLanguage" required> Bengali
+                            <input type="radio" value="English" name="MessageLanguage" required> English
                         </div>
 
                         <input type="hidden" name="batchName" value="<%= batchName %>">
