@@ -3,7 +3,7 @@ const studentList = require('../database/studentList_schema.js');
 const paymentHistory = require('../database/paymentHistory_schema.js');
 
 // 5 0 1 * * => 12:05AM of 1st date of every month or every week
-nodeCron.schedule("*/6 * * * *", async () => {
+nodeCron.schedule("5 0 1 * *", async () => {
 
     console.log("Starting Monthly Payment Checking...");
     console.log("Updating paymentHistory...");
