@@ -15,7 +15,9 @@ const add_batchName_to_db = require('./modules/add_batchName_to_db.js');
 const fetch_batchName_from_db = require('./modules/fetch_batchName_from_db.js');
 const add_student_name_to_db = require('./modules/add_student_name_to_db.js');
 const fetch_student_list_from_db = require('./modules/fetch_student_list_from_db.js');
-const fetch_data_from_paymentHistory = require('./modules/fetch_data_from_paymentHistory.js');
+const fetch_duePayments_form_db = require('./modules/fetch_duePayments_form_db.js');
+const fetch_paidPayments_from_db = require('./modules/fetch_paidPayments_from_db.js');
+const markaspaid_payment = require('./modules/markaspaid_payment.js');
 require('./modules/nodeCron.js');
 
 const app = express();
@@ -189,15 +191,16 @@ app.post('/add/add-student/:user_id/:batchName', async (req, res) => {
 
     if (req.session.isLoggedIn) {
 
-        const studentName = req.body.studentName;
-        const studentPhNo = req.body.studentPhNo;
+        const studentName = req.body.studentName.trim();
+        const studentPhNo = req.body.studentPhNo.trim();
         const WhatsAppNotifications = req.body.WhatsAppNotifications;
+        const MessageLanguage = req.body.MessageLanguage;
         const batchName = req.body.batchName;
         const user_id = req.body.user_id;
 
         try {
 
-            await add_student_name_to_db(studentName, studentPhNo, WhatsAppNotifications, batchName, user_id);
+            await add_student_name_to_db(studentName, studentPhNo, WhatsAppNotifications, MessageLanguage, batchName, user_id);
             req.flash('success_msg', "Student saved!");
             req.session.save((err) => {
                 if (err) {
@@ -322,8 +325,9 @@ app.get('/manage/:user_id/:batchName/:student_id/:studentName', async (req, res)
         const studentName = req.params.studentName;
 
         try {
-            const studentDuePayments = await fetch_data_from_paymentHistory(student_id, user_id);
-            return res.render('each-student-dashboard', {user_id, batchName, student_id ,studentName, studentDuePayments});
+            const studentDuePayments = await fetch_duePayments_form_db(student_id, user_id);
+            const studentPaidPayments = await fetch_paidPayments_from_db(student_id, user_id);
+            return res.render('each-student-dashboard', {user_id, batchName, student_id ,studentName, studentDuePayments, studentPaidPayments});
         } catch (err) {
             console.log("Error while fetching data from paymentHistory: ", err);
             req.flash('error_msg', "Internal error occured! Student data not found");
@@ -334,6 +338,46 @@ app.get('/manage/:user_id/:batchName/:student_id/:studentName', async (req, res)
                 return res.redirect(`/manage/${user_id}/${batchName}`);
             })
         }
+
+    } else {
+        return res.redirect('/');
+    }
+
+})
+
+app.post('/manage/:user_id/:batchName/:student_id/:studentName/markaspaid', async (req, res) => {
+    
+    if (req.session.isLoggedIn) {
+
+        try {
+
+            const teacher_id = req.params.user_id;
+            const student_id = req.params.student_id;
+            const batchName = req.params.batchName;
+            const studentName = req.params.studentName;
+
+            await markaspaid_payment(teacher_id, student_id);
+
+            req.flash('success_msg', "Mark Payment as Paid!");
+            req.session.save((err) => {
+                if (err) {
+                    console.log("Error occurred while saving session: ", err);
+                }
+                return res.redirect(`/manage/${teacher_id}/${batchName}/${student_id}/${studentName}`);
+            })
+
+        } catch (err) {
+
+            req.flash('error_msg', "Internal server error! Please try again");
+            req.session.save((err) => {
+                if (err) {
+                    console.log("Error occurred while saving session: ", err);
+                }
+                return res.redirect(`/manage/${teacher_id}/${batchName}/${student_id}/${studentName}`);
+            })
+
+        }
+
 
     } else {
         return res.redirect('/');

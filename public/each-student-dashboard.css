@@ -208,9 +208,11 @@ a {
 
 .due-payment-container {
     height: fit-content;
-    width: 90%;
+    width: 80%;
     padding: 10px;
+    margin: 10px;
     border: 2px solid #de350b69;
+    background-color: #de350b69;
     border-radius: 9px;
     font-size: 18px;
 }
@@ -236,11 +238,13 @@ a {
 .due-payment-logo {
     height: fit-content;
     width: fit-content;
+    font-size: 18px;
     padding: 10px;
     margin: 5px;
     border: 2px solid red;
     border-radius: 9px;
-    color: red;
+    background-color: red;
+    color: white;
 }
 
 .paid-btn {
@@ -248,7 +252,9 @@ a {
     width: fit-content;
     padding: 10px;
     margin: 5px;
+    font-size: 18px;
     cursor: pointer;
+    border: none;
     border-radius: 9px;
     color: white;
     background-color: rgb(24, 139, 247);
@@ -258,6 +264,25 @@ a {
 .paid-btn:hover {
     transform: scale(1.05);
 }
+
+.paid-payment-container {
+    border-top: 2px solid #de350b69;
+}
+
+.paid-payment-box {
+    height: fit-content;
+    width: 80%;
+    font-size: 18px;
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid rgb(5, 27, 5);
+    font-weight: bold;
+    color: white;
+    background-color: green;
+    border-radius: 9px;
+}
+
+
 
 @media (max-width: 400px) {
 
@@ -276,6 +301,10 @@ a {
     }
 
     .student-name, .no-item-tag, .due-payment-container {
+        font-size: 14px;
+    }
+
+    .paid-btn, .due-payment-logo, .paid-payment-box {
         font-size: 14px;
     }
 

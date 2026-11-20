@@ -1,6 +1,6 @@
 const paymentHistory = require('../database/paymentHistory_schema.js');
 
-async function fetch_data_from_paymentHistory(student_id, user_id) {
+async function fetch_duePayments_form_db(student_id, user_id) {
     
     try {
 
@@ -17,4 +17,4 @@ async function fetch_data_from_paymentHistory(student_id, user_id) {
 
 }
 
-module.exports = fetch_data_from_paymentHistory;
+module.exports = fetch_duePayments_form_db;

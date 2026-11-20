@@ -1,6 +1,6 @@
 const studentList = require('../database/studentList_schema.js');
 
-async function add_student_name_to_db (studentName, studentPhNo, WhatsAppNotifications, batchName, user_id) {
+async function add_student_name_to_db (studentName, studentPhNo, WhatsAppNotifications, MessageLanguage, batchName, user_id) {
 
     try {
 
@@ -8,6 +8,7 @@ async function add_student_name_to_db (studentName, studentPhNo, WhatsAppNotific
             studentName,
             studentPhNo,
             WhatsAppNotifications,
+            MessageLanguage,
             batchName,
             user_id
         });

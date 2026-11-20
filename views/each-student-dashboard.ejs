@@ -36,7 +36,7 @@
 
                 <% if(!studentDuePayments.length > 0) { %>
 
-                    <div class="no-item-tag"><i class="fa-solid fa-file-circle-xmark"></i> Nothing to see yet!</div>
+                    <div class="no-item-tag"><i class="fa-solid fa-file-circle-xmark"></i> No Due Payments!</div>
 
                 <% } else { %>
 
@@ -72,12 +72,58 @@
                             <% } %>
 
                             <div class="duePaymentLogo-paidBtn-container">
-                                <div class="due-payment-logo"><i class="fa-solid fa-clock-rotate-left" style="margin-right: 2px;"></i> Payment Due</div>
-                                <a href="#"><div class="paid-btn">Mark As Paid</div></a>
+                                <div class="due-payment-logo"><i class="fa-solid fa-clock-rotate-left" style="margin-right: 2px;"></i>Due</div>
+                                <form action="/manage/<%= user_id %>/<%= batchName %>/<%= student_id %>/<%= studentName %>/markaspaid" method="POST" class="form-container">
+                                    <input type="submit" value="Mark As Paid" class="paid-btn">
+                                </form>
                             </div>
                         </div>
                         
                     <% }) %>
+
+                <% } %>
+
+                <% if(studentPaidPayments.length > 0) { %>
+
+                    <div class="paid-payment-container">
+
+                        <% studentPaidPayments.forEach(students => { %>
+
+                            <div class="paid-payment-box">
+
+                                <i class="fa-regular fa-circle-check"></i> 
+                                
+                                <% if(students.paymentMonth == 1) { %>
+                                    January, <%= students.paymentYear %> Paid
+                                <% } else if(students.paymentMonth == 2) { %>
+                                    February, <%= students.paymentYear %> Paid
+                                <% } else if(students.paymentMonth == 3) { %>
+                                    March, <%= students.paymentYear %> Paid
+                                <% } else if(students.paymentMonth == 4) { %>
+                                    April, <%= students.paymentYear %> Paid
+                                <% } else if(students.paymentMonth == 5) { %>
+                                    May, <%= students.paymentYear %> Paid
+                                <% } else if(students.paymentMonth == 6) { %>
+                                    June, <%= students.paymentYear %> Paid
+                                <% } else if(students.paymentMonth == 7) { %>
+                                    July, <%= students.paymentYear %> Paid
+                                <% } else if(students.paymentMonth == 8) { %>
+                                    August, <%= students.paymentYear %> Paid
+                                <% } else if(students.paymentMonth == 9) { %>
+                                    September, <%= students.paymentYear %> Paid
+                                <% } else if(students.paymentMonth == 10) { %>
+                                    October, <%= students.paymentYear %> Paid
+                                <% } else if(students.paymentMonth == 11) { %>
+                                    November, <%= students.paymentYear %> Paid
+                                <% } else { %>
+                                    Deceber, <%= students.paymentYear %> Paid
+                                <% } %>
+
+                            </div>
+
+                        <% }) %>
+
+                    </div>
 
                 <% } %>
 
@@ -97,6 +143,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.26.25/sweetalert2.min.js"></script>
     <script>
 
+        const successMsg = "<%= success_msg %>";
+        if (successMsg && successMsg.length > 0) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Paid!',
+                text: successMsg,
+                timer: 3000,
+                showConfirmButton: false
+            })
+        }
+
         const errorMsg = "<%= error_msg %>"
         if (errorMsg && errorMsg.length > 0) {
 
@@ -108,6 +165,37 @@
             })
             
         }
+
+        const loginForm = document.querySelector('.form-container');
+        const submitBtn = document.querySelector('.paid-btn');
+        let isSubmitting = false;
+
+        loginForm.addEventListener('submit', function(event) {
+
+            if (isSubmitting) {
+                event.preventDefault();
+                return;
+            }
+            isSubmitting = true;
+            submitBtn.disabled = true;
+            submitBtn.value = 'Updating...';
+            submitBtn.style.opacity = '0.7';
+            submitBtn.style.cursor = 'not-allowed';
+
+        })
+
+        window.addEventListener('pageshow', function(event) {
+
+            if (event.persisted) {
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                submitBtn.value = 'Mark As Paid';
+                submitBtn.style.opacity = '1';
+                submitBtn.style.cursor = 'pointer';
+                Swal.close();
+            }
+
+        });
 
     </script>
 
